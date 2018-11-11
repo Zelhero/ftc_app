@@ -129,7 +129,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
         else
             robot.leftArm.setPower(0.0);
 
-
+/*
         // Use gamepad buttons to move the arm up (Y) and down (A)
         if (gamepad1.x)
             robot.auxArm.setPower(.8);
@@ -137,7 +137,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
             robot.auxArm.setPower(.8);
         else
             robot.leftArm.setPower(0.0);
-
+*/
 
         // Send telemetry message to signify robot running;
         telemetry.addData("claw",  "Offset = %.2f", clawOffset);

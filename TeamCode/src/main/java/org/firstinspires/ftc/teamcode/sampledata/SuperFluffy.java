@@ -10,10 +10,13 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 /**
  * Created by Recharged Orange on 10/9/2018. Modified by Polar Technics on 11/9/18
@@ -23,8 +26,8 @@ public abstract class SuperFluffy extends LinearOpMode {
 
     public DcMotor left;
     public DcMotor right;
-    public DcMotor rightFront;
-    public DcMotor rightBack;
+    public DcMotor arm;
+    //  public DcMotor rightBack;
     public DcMotor sweeper;
 
     public Servo servo;
@@ -37,6 +40,14 @@ public abstract class SuperFluffy extends LinearOpMode {
 
     double lefttarget = 0;
     double righttarget = 0;
+
+    //TFLite / CV stuff
+        private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
+        private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
+        private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
+        private static final String VUFORIA_KEY = " ATgwoQH/////AAAAGQZIyN7blEnstZsu3+dMPasofG+vAgBRDotB5Uj24jIrGTwIbWR87Yyl7Bt+jGz9GmNtQvGxooXkEaxOgeWlNP6O2mbhOJxuIu5IuJGoFARnOeR7ImW+GwEVeWrsLrns0f0oJ+++ATKCQM34yPxSyUtXhRwip2FgdpFiBHrpHMHTjQjtRFw3YxJx2Ba8whMUO4/adth2pQWYOgnBDhugtb2c/FCWFeYH3/RB4e5FClYIUs3VN/qC0q9DTJ5gPfKVkj9iuAJFlRXOkFuAOR1yo4uzwUA6EyhGdQY+Qs/7Q1+FTLNcq0P9YYEasujFcwYlZP/3HrdS7z7o5OInyrUUMQabYyiWhjbIFnYYNEqigNuP";
+        private VuforiaLocalizer vuforia;
+        private TFObjectDetector tfod;
 
 
     Orientation lastAngles = new Orientation();
@@ -69,17 +80,27 @@ public abstract class SuperFluffy extends LinearOpMode {
             telemetry.update();
             initiate_imu();
 
+            telemetry.addLine("vuforia init");
+            telemetry.update();
+            initVuforia();
+
+            telemetry.addLine("tfod init");
+            telemetry.update();
+            initTfod();
 
             left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
             left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
         } else {
             left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         }
         telemetry.addLine("Finished init - ready to go captain!");
@@ -90,14 +111,17 @@ public abstract class SuperFluffy extends LinearOpMode {
 
         left = hardwareMap.dcMotor.get("left");
         right = hardwareMap.dcMotor.get("right");
+        arm = hardwareMap.dcMotor.get("arm");
 
 
         left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
         left.setDirection(DcMotorSimple.Direction.FORWARD);
         right.setDirection(DcMotorSimple.Direction.REVERSE);
+        arm.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
     }
@@ -144,6 +168,32 @@ public abstract class SuperFluffy extends LinearOpMode {
         }
     }
 
+    private void initVuforia() {
+        /*
+         * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
+         */
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+
+        parameters.vuforiaLicenseKey = VUFORIA_KEY;
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+
+        //  Instantiate the Vuforia engine
+        vuforia = ClassFactory.getInstance().createVuforia(parameters);
+
+        // Loading trackables is not necessary for the Tensor Flow Object Detection engine.
+    }
+
+    private void initTfod() {
+        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
+                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
+        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
+        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);
+    }
+
+
+
+
 
     public void driveForwardEncoders(double distance, double power) {
         left.setPower(power);
@@ -171,7 +221,7 @@ public abstract class SuperFluffy extends LinearOpMode {
     public void driveBackwardEncoders(double distance, double power) {
 
         lefttarget = (left.getCurrentPosition() - distance);
-        righttarget = (rightBack.getCurrentPosition() - distance);
+        righttarget = (right.getCurrentPosition() - distance);
 
 
         while (left.getCurrentPosition() > righttarget
@@ -190,18 +240,14 @@ public abstract class SuperFluffy extends LinearOpMode {
         }
         left.setPower(0);
         right.setPower(0);
-        rightBack.setPower(0);
-        rightFront.setPower(0);
     }
 
     public void driveleft(double distance, double power) {
-        right.setPower(-power);
+        right.setPower(power);
         left.setPower(power);
-        rightFront.setPower(power);
-        rightBack.setPower(-power);
 
-        lefttarget = (left.getCurrentPosition() - distance);
-        righttarget = (right.getCurrentPosition() + distance);
+        lefttarget = (left.getCurrentPosition() + distance);
+        righttarget = (right.getCurrentPosition() - distance);
 
         while (right.getCurrentPosition() > righttarget
                 && left.getCurrentPosition() < lefttarget
@@ -216,8 +262,6 @@ public abstract class SuperFluffy extends LinearOpMode {
         }
         left.setPower(0);
         right.setPower(0);
-        rightBack.setPower(0);
-        rightFront.setPower(0);
     }
 
     public void driveright(double distance, double power) {
@@ -226,7 +270,7 @@ public abstract class SuperFluffy extends LinearOpMode {
 
 
         lefttarget = (left.getCurrentPosition() + distance);
-        righttarget = (rightBack.getCurrentPosition() - distance);
+        righttarget = (right.getCurrentPosition() - distance);
 
 
         while (right.getCurrentPosition() < lefttarget
@@ -235,22 +279,16 @@ public abstract class SuperFluffy extends LinearOpMode {
 
             telemetry.addData("left", left.getCurrentPosition());
             telemetry.addData("right", right.getCurrentPosition());
-            telemetry.addData("right back", rightBack.getCurrentPosition());
-            telemetry.addData("right front", rightFront.getCurrentPosition());
 
             telemetry.update();
         }
         left.setPower(0);
         right.setPower(0);
-        rightBack.setPower(0);
-        rightFront.setPower(0);
     }
 
     public void rotateLeft(double targetAngle, double power) {
-        left.setPower(-power);
+        left.setPower(power);
         right.setPower(-power);
-        rightBack.setPower(power);
-        rightFront.setPower(power);
 
         while (opModeIsActive() && getAngle() < targetAngle) {
             telemetry.addData("curentAngle", getAngle());
@@ -259,16 +297,12 @@ public abstract class SuperFluffy extends LinearOpMode {
         }
         left.setPower(0);
         right.setPower(0);
-        rightBack.setPower(0);
-        rightFront.setPower(0);
 
     }
 
     public void rotateRight(double targetAngle, double power) {
         left.setPower(power);
-        right.setPower(power);
-        rightBack.setPower(-power);
-        rightFront.setPower(-power);
+        right.setPower(-power);
 
         while (opModeIsActive() && getAngle() > targetAngle) {
             telemetry.addData("curentAngle", getAngle());
@@ -277,8 +311,6 @@ public abstract class SuperFluffy extends LinearOpMode {
         }
         left.setPower(0);
         right.setPower(0);
-        rightBack.setPower(0);
-        rightFront.setPower(0);
     }
 
 
@@ -304,4 +336,26 @@ public abstract class SuperFluffy extends LinearOpMode {
 
         return globalAngle;
     }
+
+    //Begin Polar Technics methods
+
+    public void armLift(boolean up, boolean down) {
+
+        if (up)
+            arm.setPower(1);
+        else if (down)
+            arm.setPower(-1);
+        else
+            arm.setPower(0.0);
+    }
+
+    public void tankDrive(double leftX, double rightX) {
+
+        left.setPower(leftX);
+        right.setPower(rightX);
+    }
+
+
+
+
 }
