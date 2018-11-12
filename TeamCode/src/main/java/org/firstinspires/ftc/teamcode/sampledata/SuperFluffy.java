@@ -41,6 +41,11 @@ public abstract class SuperFluffy extends LinearOpMode {
     double lefttarget = 0;
     double righttarget = 0;
 
+    public double autoPower = .8;
+
+
+
+
     //TFLite / CV stuff
         private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
         private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
@@ -353,6 +358,21 @@ public abstract class SuperFluffy extends LinearOpMode {
 
         left.setPower(leftX);
         right.setPower(rightX);
+    }
+
+    public void autoArm(double time){
+        while(getRuntime() < time){
+            arm.setPower(1);}
+        arm.setPower(0);
+    }
+
+
+    public void markerDrop(){
+        while(getRuntime() < 1) {
+            servo.setPosition(.33);
+        }
+        servo.setPosition(0);
+
     }
 
 
