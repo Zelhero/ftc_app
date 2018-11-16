@@ -58,7 +58,7 @@ import com.qualcomm.robotcore.hardware.NormalizedRGBA;
  * Servo channel:  Servo to open left claw:  "left_hand"
  * Servo channel:  Servo to open right claw: "right_hand"
  */
-public abstract class HardwareFluffy extends LinearOpMode {
+public class HardwareFluffy  {
 
 
     /* Public OpMode members. */
@@ -126,7 +126,7 @@ public abstract class HardwareFluffy extends LinearOpMode {
 
     }
     //Copy code into auto opmodes
-
+/*
     public void colorSensorEnable() {
 
         sensorColor = hardwareMap.get(ColorSensor.class, "sensor_colorl");
@@ -161,7 +161,7 @@ public abstract class HardwareFluffy extends LinearOpMode {
 
             telemetry.update();
         }
+*/
 
 
-    }
 }
