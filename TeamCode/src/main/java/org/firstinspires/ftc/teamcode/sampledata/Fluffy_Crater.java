@@ -1,14 +1,15 @@
 package org.firstinspires.ftc.teamcode.sampledata;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@Autonomous(name="Fluffy: Crater", group="Pushbot")
+@Autonomous(name="Fluffy: Crater")
 public abstract class Fluffy_Crater extends SuperFluffy {
-    @Override
+
     public void runOpMode() {
-init();
+
     initialization(true);
+
+
     waitForStart();
 
 
