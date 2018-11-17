@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -41,6 +42,11 @@ public abstract class SuperFluffy extends LinearOpMode {
     public float imuStartingPosition;
     public DigitalChannel beam;
 
+    private ElapsedTime     runtime = new ElapsedTime();
+
+
+
+
     double lefttarget = 0;
     double righttarget = 0;
 
@@ -67,22 +73,22 @@ public abstract class SuperFluffy extends LinearOpMode {
         telemetry.addLine("drive Init");
         telemetry.update();
         initDrive();
-
+/*
         telemetry.addLine("sweeper init");
         telemetry.update();
         initSweeper();
-
+*/
         telemetry.addLine("servo");
         telemetry.update();
         initServo();
 
         telemetry.addLine("beam");
         telemetry.update();
-        initBeam();
+        //initBeam();
 
         telemetry.addLine("init touch");
         telemetry.update();
-        initTouch();
+        //initTouch();
 
         if (autonomous) {
             telemetry.addLine("imu init");
@@ -142,7 +148,8 @@ public abstract class SuperFluffy extends LinearOpMode {
 
     public void initServo() {
         servo = hardwareMap.servo.get("servo");
-        REVServo = hardwareMap.crservo.get("REVServo");
+       //CONTINUOUS SERVO ENABLE
+        // REVServo = hardwareMap.crservo.get("REVServo");
     }
 
     public void initBeam() {
@@ -364,18 +371,29 @@ public abstract class SuperFluffy extends LinearOpMode {
         right.setPower(rightX);
     }
 
-    public void autoArm(double time){
-        while(getRuntime() < time){
-            arm.setPower(1);}
+    public void autoArm(long time){
+        time = time * 1000;
+        arm.setPower(-1);
+        sleep(time);
         arm.setPower(0);
+        runtime.reset();
     }
 
 
     public void markerDrop(){
-        while(getRuntime() < 1) {
-            servo.setPosition(.33);
-        }
-        servo.setPosition(0);
+
+            servo.setPosition(1);
+            sleep(1500);
+            servo.setPosition(0);
+
+    }
+
+    public void driveTime(long timeinmilli, double l, double r){
+
+
+        tankDrive(l, r);
+        sleep(timeinmilli);
+        tankDrive(0, 0);
 
     }
 

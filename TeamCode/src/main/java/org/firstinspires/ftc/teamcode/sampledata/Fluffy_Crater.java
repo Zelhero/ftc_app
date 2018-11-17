@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.sampledata;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name="Fluffy: Crater")
-public abstract class Fluffy_Crater extends SuperFluffy {
+public class Fluffy_Crater extends SuperFluffy {
 
     public void runOpMode() {
 
@@ -15,9 +15,9 @@ public abstract class Fluffy_Crater extends SuperFluffy {
 
 
         autoArm(4);
-        driveForwardEncoders(12,autoPower);
+        driveTime(1500, -.8, -.8);
         markerDrop();
-        driveBackwardEncoders(12, autoPower);
+        driveTime(1500, .8, .8);
 
 
 

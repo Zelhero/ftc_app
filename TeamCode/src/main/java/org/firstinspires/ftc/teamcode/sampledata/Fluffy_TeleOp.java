@@ -4,24 +4,29 @@ package org.firstinspires.ftc.teamcode.sampledata;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name="Fluffy: TeleOp")
-public abstract class Fluffy_TeleOp extends SuperFluffy{
-
-   public void runOpMode() {
-       initialization(false);
-       waitForStart();
-       while(opModeIsActive()) {
-
-           double left = gamepad1.left_stick_x;
-           double right = gamepad1.right_stick_x;
-
-           tankDrive(left, right);
-           armLift(gamepad1.y, gamepad1.a);
-       }
+public class Fluffy_TeleOp extends SuperFluffy{
 
 
+public void runOpMode() {
+
+    initialization(false);
+    waitForStart();
+    while (opModeIsActive()) {
+        float gpleft = gamepad1.left_stick_y;
+        float gpright = gamepad1.right_stick_y;
+        boolean gpa = gamepad1.a;
+        boolean gpb = gamepad1.b;
+        boolean gpx = gamepad1.x;
+        boolean gpy = gamepad1.y;
+
+        tankDrive(gpleft, gpright);
+        armLift(gpa, gpy);
+    }
+}
 
 
-   }
+
+
 
 
 
