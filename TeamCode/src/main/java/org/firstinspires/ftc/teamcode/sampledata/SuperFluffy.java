@@ -42,7 +42,7 @@ public abstract class SuperFluffy extends LinearOpMode {
     public float imuStartingPosition;
     public DigitalChannel beam;
 
-    private ElapsedTime     runtime = new ElapsedTime();
+    public  ElapsedTime     runtime = new ElapsedTime();
 
 
 
@@ -61,8 +61,8 @@ public abstract class SuperFluffy extends LinearOpMode {
         private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
         private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
         private static final String VUFORIA_KEY = " ATgwoQH/////AAAAGQZIyN7blEnstZsu3+dMPasofG+vAgBRDotB5Uj24jIrGTwIbWR87Yyl7Bt+jGz9GmNtQvGxooXkEaxOgeWlNP6O2mbhOJxuIu5IuJGoFARnOeR7ImW+GwEVeWrsLrns0f0oJ+++ATKCQM34yPxSyUtXhRwip2FgdpFiBHrpHMHTjQjtRFw3YxJx2Ba8whMUO4/adth2pQWYOgnBDhugtb2c/FCWFeYH3/RB4e5FClYIUs3VN/qC0q9DTJ5gPfKVkj9iuAJFlRXOkFuAOR1yo4uzwUA6EyhGdQY+Qs/7Q1+FTLNcq0P9YYEasujFcwYlZP/3HrdS7z7o5OInyrUUMQabYyiWhjbIFnYYNEqigNuP";
-        private VuforiaLocalizer vuforia;
-        private TFObjectDetector tfod;
+        public VuforiaLocalizer vuforia;
+        public TFObjectDetector tfod;
 
 
     Orientation lastAngles = new Orientation();
@@ -382,9 +382,9 @@ public abstract class SuperFluffy extends LinearOpMode {
 
     public void markerDrop(){
 
-            servo.setPosition(1);
-            sleep(1500);
             servo.setPosition(0);
+            sleep(1500);
+            servo.setPosition(1);
 
     }
 
