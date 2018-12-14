@@ -18,9 +18,12 @@ public void runOpMode() {
         boolean gpb = gamepad1.b;
         boolean gpx = gamepad1.x;
         boolean gpy = gamepad1.y;
+        boolean gplb = gamepad1.left_bumper;
+        boolean gprb = gamepad1.right_bumper;
 
         tankDrive(gpleft, gpright);
         armLift(gpa, gpy);
+        crServo(gplb, gprb);
     }
 }
 
