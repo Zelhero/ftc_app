@@ -51,7 +51,7 @@ public abstract class SuperFluffy extends LinearOpMode {
     double righttarget = 0;
 
     public double autoPower = .8;
-    public long actoTime = 10;
+    public long actoTime = 8;
     public long mk2Time = 4;
 
     public int goldMineralPos; //Left = 1, Center = 2 and Right = 3
@@ -75,11 +75,11 @@ public abstract class SuperFluffy extends LinearOpMode {
         telemetry.addLine("drive Init");
         telemetry.update();
         initDrive();
-/*
+
         telemetry.addLine("sweeper init");
         telemetry.update();
         initSweeper();
-*/
+
         telemetry.addLine("servo");
         telemetry.update();
         initServo();
@@ -405,7 +405,16 @@ public abstract class SuperFluffy extends LinearOpMode {
         else if (down)
             REVServo.setPower(-1);
         else
-            REVServo.setPower(0.0);
+            REVServo.setPower(0);
+    }
+    public void colArm(boolean up, boolean down) {
+
+        if (up)
+            sweeper.setPower(1);
+        else if (down)
+            sweeper.setPower(-1);
+        else
+            sweeper.setPower(0);
     }
 
     public void goldDetect(){

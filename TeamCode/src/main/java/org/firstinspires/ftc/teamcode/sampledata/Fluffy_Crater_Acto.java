@@ -8,20 +8,20 @@ public class Fluffy_Crater_Acto extends SuperFluffy {
     public void runOpMode() {
 
     initialization(true);
-    goldDetect();
+    //goldDetect();
 
     waitForStart();
 
-    tfod.deactivate(); //Stop TFLite
+    //tfod.deactivate(); //Stop TFLite
 
-        autoArm(11);
-
-      //  driveTime(1500, .8, .8); //Drive away from lander briefly
-        rotateLeft(-90, .6); //Rotate towards depot
-        driveTime(4500, .8, .8); //Drive towards depot
+        autoArm(actoTime);
+        driveTime(500, .8, -.8); //Drive away from lander briefly
+        driveTime(500, -.8, -.8); //Drive away from lander briefly
+        driveTime(500, -.8, .8); //Drive away from lander briefly
+//driveTime(4500, .8, .8); //Drive towards depot
+        driveTime(2000, -.8, -.8); //Drive towards crater
         markerDrop(); //Drop marker
-        rotateRight(160, .6); //Rotate towards crater
-        driveTime(6000, .8, .8); //Drive towards crater
+        driveTime(2000, .8, .8); //Drive towards crater
 
 
 

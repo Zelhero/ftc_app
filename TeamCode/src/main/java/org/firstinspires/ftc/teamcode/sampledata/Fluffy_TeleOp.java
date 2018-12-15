@@ -24,6 +24,7 @@ public void runOpMode() {
         tankDrive(gpleft, gpright);
         armLift(gpa, gpy);
         crServo(gplb, gprb);
+        colArm(gpb,gpx);
     }
 }
 
