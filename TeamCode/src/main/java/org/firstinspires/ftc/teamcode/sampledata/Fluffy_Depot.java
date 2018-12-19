@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.sampledata;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+
 @Autonomous(name="Fluffy: Depot")
 public class Fluffy_Depot extends SuperFluffy {
 

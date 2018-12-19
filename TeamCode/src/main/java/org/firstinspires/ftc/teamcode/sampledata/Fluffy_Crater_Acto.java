@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.sampledata;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name="Fluffy: Crater Actobotics")
+@Autonomous(name="RUN THISFluffy: Crater Actobotics")
 public class Fluffy_Crater_Acto extends SuperFluffy {
 
     public void runOpMode() {
@@ -15,17 +15,12 @@ public class Fluffy_Crater_Acto extends SuperFluffy {
     //tfod.deactivate(); //Stop TFLite
 
         autoArm(actoTime);
-        driveTime(500, .8, -.8); //Drive away from lander briefly
-        driveTime(500, -.8, -.8); //Drive away from lander briefly
-        driveTime(500, -.8, .8); //Drive away from lander briefly
-//driveTime(4500, .8, .8); //Drive towards depot
-        driveTime(2000, -.8, -.8); //Drive towards crater
+      //  driveTime(400, .8, -.8); //Twist from lander
+        driveTime(300, -.8, -.8); //Drive from lander
+       // driveTime(450, -.8, .8); //Twist back to face corner
+        driveTime(1300, -.8, -.8); //Drive towards depot
         markerDrop(); //Drop marker
-        driveTime(2000, .8, .8); //Drive towards crater
-
-
-
-
-
+       // driveTime(1300, .8, .8); //Drive towards crater
+        markerReset();
     }
 }

@@ -51,8 +51,9 @@ public abstract class SuperFluffy extends LinearOpMode {
     double righttarget = 0;
 
     public double autoPower = .8;
-    public long actoTime = 8;
+    public long actoTime = 6;
     public long mk2Time = 4;
+    double servoPos = 0;
 
     public int goldMineralPos; //Left = 1, Center = 2 and Right = 3
 
@@ -150,7 +151,7 @@ public abstract class SuperFluffy extends LinearOpMode {
 
     public void initServo() {
         servo = hardwareMap.servo.get("servo");
-       //CONTINUOUS SERVO ENABLE
+                //CONTINUOUS SERVO ENABLE
         REVServo = hardwareMap.crservo.get("REVServo");
     }
 
@@ -383,11 +384,10 @@ public abstract class SuperFluffy extends LinearOpMode {
 
 
     public void markerDrop(){
-
-            servo.setPosition(0);
-            sleep(1500);
             servo.setPosition(1);
-
+    }
+    public void markerReset(){
+        servo.setPosition(0);
     }
 
     public void driveTime(long timeinmilli, double l, double r){
@@ -416,7 +416,22 @@ public abstract class SuperFluffy extends LinearOpMode {
         else
             sweeper.setPower(0);
     }
+    public void markerTest(boolean left, boolean right, boolean test){
 
+
+        if(left){
+            servoPos = servoPos + .1;
+        }
+        if(right){
+            servoPos = servoPos -  .1;
+        }
+        if(test){
+            servoPos = 0;
+        }
+        servo.setPosition(gamepad2.left_stick_x);
+        telemetry.addData("Servo Position", servoPos);
+
+    }
     public void goldDetect(){
           tfod.activate();
 

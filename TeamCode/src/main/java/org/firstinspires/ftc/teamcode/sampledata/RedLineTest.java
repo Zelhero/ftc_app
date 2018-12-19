@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.sampledata;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 /**
  * Created by Recharged Orange on 10/18/2018.
  */
 
+@Disabled
 @Autonomous (name = "RedLineTest")
 
 public class RedLineTest extends superClass {
