@@ -10,9 +10,11 @@ public class Fluffy_TeleOp extends SuperFluffy{
 public void runOpMode() {
 
     initialization(true);
-    goldDetect();
     waitForStart();
     while (opModeIsActive()) {
+        goldDetect();
+
+
         float gpleft = gamepad1.left_stick_y;
         float gpright = gamepad1.right_stick_y;
         boolean gpa = gamepad1.a;
