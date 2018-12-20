@@ -9,7 +9,8 @@ public class Fluffy_TeleOp extends SuperFluffy{
 
 public void runOpMode() {
 
-    initialization(false);
+    initialization(true);
+    goldDetect();
     waitForStart();
     while (opModeIsActive()) {
         float gpleft = gamepad1.left_stick_y;
@@ -31,6 +32,7 @@ public void runOpMode() {
         crServo(gplb, gprb);
         colArm(gpb,gpx);
         markerTest(gpx2, gpb2, gpa2);
+        telemetry.update();
     }
 }
 

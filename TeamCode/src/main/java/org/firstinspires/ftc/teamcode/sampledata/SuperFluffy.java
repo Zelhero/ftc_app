@@ -63,7 +63,7 @@ public abstract class SuperFluffy extends LinearOpMode {
         private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
         private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
         private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
-        private static final String VUFORIA_KEY = " ATgwoQH/////AAAAGQZIyN7blEnstZsu3+dMPasofG+vAgBRDotB5Uj24jIrGTwIbWR87Yyl7Bt+jGz9GmNtQvGxooXkEaxOgeWlNP6O2mbhOJxuIu5IuJGoFARnOeR7ImW+GwEVeWrsLrns0f0oJ+++ATKCQM34yPxSyUtXhRwip2FgdpFiBHrpHMHTjQjtRFw3YxJx2Ba8whMUO4/adth2pQWYOgnBDhugtb2c/FCWFeYH3/RB4e5FClYIUs3VN/qC0q9DTJ5gPfKVkj9iuAJFlRXOkFuAOR1yo4uzwUA6EyhGdQY+Qs/7Q1+FTLNcq0P9YYEasujFcwYlZP/3HrdS7z7o5OInyrUUMQabYyiWhjbIFnYYNEqigNuP";
+        private static final String VUFORIA_KEY = "ATgwoQH/////AAAAGQZIyN7blEnstZsu3+dMPasofG+vAgBRDotB5Uj24jIrGTwIbWR87Yyl7Bt+jGz9GmNtQvGxooXkEaxOgeWlNP6O2mbhOJxuIu5IuJGoFARnOeR7ImW+GwEVeWrsLrns0f0oJ+++ATKCQM34yPxSyUtXhRwip2FgdpFiBHrpHMHTjQjtRFw3YxJx2Ba8whMUO4/adth2pQWYOgnBDhugtb2c/FCWFeYH3/RB4e5FClYIUs3VN/qC0q9DTJ5gPfKVkj9iuAJFlRXOkFuAOR1yo4uzwUA6EyhGdQY+Qs/7Q1+FTLNcq0P9YYEasujFcwYlZP/3HrdS7z7o5OInyrUUMQabYyiWhjbIFnYYNEqigNuP";
         public VuforiaLocalizer vuforia;
         public TFObjectDetector tfod;
 
@@ -458,14 +458,20 @@ public abstract class SuperFluffy extends LinearOpMode {
                             }
                             if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
                                 if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
-                                    telemetry.addData("Gold Mineral Position", "Left");
                                     goldMineralPos = 1;
+                                    telemetry.addData("Gold Mineral Position", goldMineralPos);
+                                    telemetry.update();
+
                                 } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
-                                    telemetry.addData("Gold Mineral Position", "Right");
                                     goldMineralPos = 3;
+                                    telemetry.addData("Gold Mineral Position", goldMineralPos);
+                                    telemetry.update();
+
                                 } else {
-                                    telemetry.addData("Gold Mineral Position", "Center");
                                     goldMineralPos = 2;
+                                    telemetry.addData("Gold Mineral Position", goldMineralPos);
+                                    telemetry.update();
+
                                 }
                             }
                         }
