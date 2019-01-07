@@ -9,12 +9,9 @@ public class Fluffy_TeleOp extends SuperFluffy{
 
 public void runOpMode() {
 
-    initialization(true);
+    initialization(false);
     waitForStart();
     while (opModeIsActive()) {
-        goldDetect();
-
-
         float gpleft = gamepad1.left_stick_y;
         float gpright = gamepad1.right_stick_y;
         boolean gpa = gamepad1.a;
@@ -29,19 +26,17 @@ public void runOpMode() {
         boolean gpy2 = gamepad2.y;
         boolean gplb2 = gamepad2.left_bumper;
         boolean gprb2 = gamepad2.right_bumper;
+        boolean gpupd = gamepad1.dpad_up;
+        boolean gpdownd = gamepad1.dpad_down;
+        boolean gpleftd = gamepad1.dpad_left;
+        boolean gprightd = gamepad1.dpad_right;
+
         tankDrive(gpleft, gpright);
         armLift(gpa, gpy);
         crServo(gplb, gprb);
-        colArm(gpb,gpx);
-        markerTest(gpx2, gpb2, gpa2);
-        telemetry.update();
+        colArm(gpleftd,gprightd);
+        armActuator(gpupd,gpdownd);
+
     }
 }
-
-
-
-
-
-
-
 }

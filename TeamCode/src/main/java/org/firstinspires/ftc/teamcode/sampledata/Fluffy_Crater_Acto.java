@@ -15,12 +15,9 @@ public class Fluffy_Crater_Acto extends SuperFluffy {
     //tfod.deactivate(); //Stop TFLite
 
         autoArm(actoTime);
-      //  driveTime(400, .8, -.8); //Twist from lander
-        driveTime(300, -.8, -.8); //Drive from lander
-       // driveTime(450, -.8, .8); //Twist back to face corner
-        driveTime(1300, -.8, -.8); //Drive towards depot
+        driveTime(200, -.8, .8); //twist
+        driveTime(2000, .8, .8); //Drive from lander
         markerDrop(); //Drop marker
-       // driveTime(1300, .8, .8); //Drive towards crater
         markerReset();
     }
 }

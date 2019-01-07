@@ -9,22 +9,29 @@ public class Fluffy_Depot extends SuperFluffy {
     public void runOpMode() {
 
         initialization(true);
-        goldDetect();
+
+        while(!opModeIsActive()) {
+            goldDetect();
+        }
 
         waitForStart();
 
         tfod.deactivate(); //Stop TFLite
 
-        autoArm(4); //Lower from lander
+        autoArm(actoTime); //Lower from lander
+        rotateRight(15, .5); //Adjust angle for landing
+
 
         if (goldMineralPos == 1) { //Left
-            rotateLeft(-30, .6); //Rotate towards gold
-            driveTime(1000, -.8, -.8); //Drive towards Gold
+            rotateLeft(-15, .6); //Rotate towards gold
+            driveForwardEncoders(500, .8); //Run into gold
+
             rotateRight(30, .6); //Rotate to face depot
-            driveTime(500, -.8, -.8); //Drive towards depot
+            driveForwardEncoders(3000, .8);//Drive to depot
             markerDrop();
-            rotateRight(45, .6); //Rotate to face depot
-            driveTime(3000, -.8, -.8); //Drive towards depot
+
+            rotateRight(45, .6); //Rotate to face crater
+            driveForwardEncoders(3000, .8);// Drive towards crater
         }
         else if (goldMineralPos == 2) { //Center
             driveTime(750, -.8, -.8);

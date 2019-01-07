@@ -31,7 +31,7 @@ public abstract class SuperFluffy extends LinearOpMode {
     public DcMotor left;
     public DcMotor right;
     public DcMotor arm;
-    //  public DcMotor rightBack;
+    public DcMotor armExtend;
     public DcMotor sweeper;
 
     public Servo servo;
@@ -130,6 +130,7 @@ public abstract class SuperFluffy extends LinearOpMode {
         left = hardwareMap.dcMotor.get("left");
         right = hardwareMap.dcMotor.get("right");
         arm = hardwareMap.dcMotor.get("arm");
+        armExtend = hardwareMap.dcMotor.get("armExtend");
 
 
         left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -139,8 +140,8 @@ public abstract class SuperFluffy extends LinearOpMode {
 
         left.setDirection(DcMotorSimple.Direction.FORWARD);
         right.setDirection(DcMotorSimple.Direction.REVERSE);
-        arm.setDirection(DcMotorSimple.Direction.REVERSE);
-
+        arm.setDirection(DcMotorSimple.Direction.FORWARD);
+        armExtend.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
 
@@ -408,13 +409,28 @@ public abstract class SuperFluffy extends LinearOpMode {
             REVServo.setPower(0);
     }
     public void colArm(boolean up, boolean down) {
+        //Arm pivoting
 
         if (up)
-            sweeper.setPower(1);
+            sweeper.setPower(.5);
         else if (down)
-            sweeper.setPower(-1);
+            sweeper.setPower(-.5);
         else
             sweeper.setPower(0);
+
+
+        //sweeper.setPower(gamepad1.left_trigger);
+
+    }
+
+    public void armActuator(boolean extend, boolean retract){
+        //Arm linear actuator for length
+        if (extend)
+            armExtend.setPower(1);
+        else if (retract)
+            armExtend.setPower(-1);
+        else
+            armExtend.setPower(0);
     }
     public void markerTest(boolean left, boolean right, boolean test){
 
