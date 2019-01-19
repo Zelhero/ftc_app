@@ -2,8 +2,8 @@ package org.firstinspires.ftc.teamcode.sampledata;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name="RUN THISFluffy: Crater Actobotics")
-public class Fluffy_Crater_Acto extends SuperFluffy {
+@Autonomous(name="Fluffy: Depot RUN")
+public class Fluffy_Depot_ActoWorking extends SuperFluffy {
 
     public void runOpMode() {
 
@@ -16,16 +16,14 @@ public class Fluffy_Crater_Acto extends SuperFluffy {
 
         autoArm(actoTime);
         rotateLeft(15,.6);
-        driveTime(750, -.8, -.8); //Drive from lander
-        sleep(1000);
-        rotateLeft(75,.6);
-        sleep(1000);
-        driveTime(2200, -.5, -.5); //Drive from lander
+        driveTime(300, -.8, -.8); //Drive from lander
+        rotateRight(0,.6);
+        driveTime(1000, -.5, -.5); //
 
         markerDrop(); //Drop marker
         markerReset();
 
-        driveTime(2200, .8, .8); //Drive from lander
+        driveTime(1000, .8, .8); //Drive from lander
 
     }
 }

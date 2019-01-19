@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name="Fluffy: TeleOp")
 public class Fluffy_TeleOp extends SuperFluffy{
 
-
 public void runOpMode() {
 
     initialization(false);
@@ -15,7 +14,7 @@ public void runOpMode() {
         float gpleft = gamepad1.left_stick_y;
         float gpright = gamepad1.right_stick_y;
         boolean gpa = gamepad1.a;
-        boolean gpb = gamepad1.b;
+        boolean gpb = gamepad1.b;//YOU CAN DO IT I BELEVE IN YOU
         boolean gpx = gamepad1.x;
         boolean gpy = gamepad1.y;
         boolean gplb = gamepad1.left_bumper;
@@ -28,13 +27,18 @@ public void runOpMode() {
         boolean gprb2 = gamepad2.right_bumper;
         boolean gpupd = gamepad1.dpad_up;
         boolean gpdownd = gamepad1.dpad_down;
-        boolean gpleftd = gamepad1.dpad_left;
+        boolean gpleftd = gamepad1.dpad_left; 
         boolean gprightd = gamepad1.dpad_right;
+        float gprt = gamepad1.right_trigger;
+        float gplt = gamepad1.left_trigger;
+        float gpleft2 = gamepad2.left_stick_y;
+
 
         tankDrive(gpleft, gpright);
         armLift(gpa, gpy);
-        crServo(gplb, gprb);
+        crServo(gpx, gpb);
         colArm(gpleftd,gprightd);
+        //colArmTrigger(gprt,gplt);
         armActuator(gpupd,gpdownd);
 
     }

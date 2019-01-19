@@ -18,7 +18,7 @@ public class Fluffy_Crater extends SuperFluffy {
 
         autoArm(4);
 
-      //  driveTime(1500, .8, .8); //Drive away from lander briefly
+      //  driveTime(1500, .8, .8); //Drive away from lander briefly// Go have brakefast you need your vitamins
         rotateLeft(-90, .6); //Rotate towards depot
         driveTime(4500, .8, .8); //Drive towards depot
         markerDrop(); //Drop marker

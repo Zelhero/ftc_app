@@ -21,7 +21,6 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
-
 /**
  * Created by Recharged Orange on 10/9/2018. Modified by Polar Technics on 11/9/18
  */
@@ -33,9 +32,10 @@ public abstract class SuperFluffy extends LinearOpMode {
     public DcMotor arm;
     public DcMotor armExtend;
     public DcMotor sweeper;
+    public DcMotor corehecc;
 
     public Servo servo;
-    public CRServo REVServo;
+   // public CRServo REVServo;
 
     public BNO055IMU imu;
     public RevTouchSensor touchSensor;
@@ -51,9 +51,10 @@ public abstract class SuperFluffy extends LinearOpMode {
     double righttarget = 0;
 
     public double autoPower = .8;
-    public long actoTime = 6;
+    public long actoTime = 5;
     public long mk2Time = 4;
     double servoPos = 0;
+    boolean servoToggle = false, on = false;
 
     public int goldMineralPos; //Left = 1, Center = 2 and Right = 3
 
@@ -100,11 +101,11 @@ public abstract class SuperFluffy extends LinearOpMode {
 
             telemetry.addLine("vuforia init");
             telemetry.update();
-            initVuforia();
+          //  initVuforia(); //REENABLE
 
             telemetry.addLine("tfod init");
             telemetry.update();
-            initTfod();
+            //initTfod(); //REENABLE
 
             left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -131,29 +132,32 @@ public abstract class SuperFluffy extends LinearOpMode {
         right = hardwareMap.dcMotor.get("right");
         arm = hardwareMap.dcMotor.get("arm");
         armExtend = hardwareMap.dcMotor.get("armExtend");
+        corehecc = hardwareMap.dcMotor.get("core");
 
 
         left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        corehecc.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
-        left.setDirection(DcMotorSimple.Direction.FORWARD);
-        right.setDirection(DcMotorSimple.Direction.REVERSE);
+        left.setDirection(DcMotorSimple.Direction.REVERSE);
+        right.setDirection(DcMotorSimple.Direction.FORWARD);
         arm.setDirection(DcMotorSimple.Direction.FORWARD);
         armExtend.setDirection(DcMotorSimple.Direction.REVERSE);
+        corehecc.setDirection(DcMotorSimple.Direction.FORWARD);
 
     }
 
     public void initSweeper() {
         sweeper = hardwareMap.dcMotor.get("sweeper");
-        sweeper.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+     //   sweeper.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void initServo() {
         servo = hardwareMap.servo.get("servo");
                 //CONTINUOUS SERVO ENABLE
-        REVServo = hardwareMap.crservo.get("REVServo");
+        //REVServo = hardwareMap.crservo.get("REVServo");
     }
 
     public void initBeam() {
@@ -300,7 +304,7 @@ public abstract class SuperFluffy extends LinearOpMode {
             telemetry.addData("left", left.getCurrentPosition());
             telemetry.addData("right", right.getCurrentPosition());
 
-            telemetry.update();
+            telemetry.update(); //You are the best human being makeing the best code for the best robot
         }
         left.setPower(0);
         right.setPower(0);
@@ -386,9 +390,10 @@ public abstract class SuperFluffy extends LinearOpMode {
 
     public void markerDrop(){
             servo.setPosition(1);
+            sleep(750);
     }
     public void markerReset(){
-        servo.setPosition(0);
+        servo.setPosition(.5);
     }
 
     public void driveTime(long timeinmilli, double l, double r){
@@ -402,24 +407,40 @@ public abstract class SuperFluffy extends LinearOpMode {
     public void crServo(boolean up, boolean down) {
 
         if (up)
-            REVServo.setPower(1);
+            corehecc.setPower(1);
         else if (down)
-            REVServo.setPower(-1);
-        else
-            REVServo.setPower(0);
-    }
+            corehecc.setPower(0);
+        }
+
+        public void servoTest(float stick){
+            servo.setPosition(stick);
+            telemetry.addData("ServoPos",stick);
+            telemetry.update();
+        }
+
+
     public void colArm(boolean up, boolean down) {
         //Arm pivoting
 
         if (up)
-            sweeper.setPower(.5);
+            sweeper.setPower(2); //We may call you an egghead, but eggs are an imortant for cake Without the eggs the cake falls apart rember that
         else if (down)
-            sweeper.setPower(-.5);
+            sweeper.setPower(-2);
         else
             sweeper.setPower(0);
 
 
         //sweeper.setPower(gamepad1.left_trigger);
+
+    }
+
+
+    public void colArmTrigger(float up, float down) {
+        //Arm pivoting
+
+
+        sweeper.setPower(1.5);
+        sweeper.setPower(-1.5);
 
     }
 
@@ -486,7 +507,7 @@ public abstract class SuperFluffy extends LinearOpMode {
                                 } else {
                                     goldMineralPos = 2;
                                     telemetry.addData("Gold Mineral Position", goldMineralPos);
-                                    telemetry.update();
+                                    telemetry.update(); // Go pet a dog and call him a good boy even if they hurt you in the past
 
                                 }
                             }

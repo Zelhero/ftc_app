@@ -18,7 +18,7 @@ public class Fluffy_Crater_Acto2 extends SuperFluffy {
         driveForwardEncoders(500, .8);
         rotateLeft(35, .6);
         driveForwardEncoders(2000, .8);
-        rotateLeft(35, .6);
+        rotateLeft(35, .6);// You the manlyest man
         driveForwardEncoders(1000, .8);
         markerDrop();
         sleep(500);

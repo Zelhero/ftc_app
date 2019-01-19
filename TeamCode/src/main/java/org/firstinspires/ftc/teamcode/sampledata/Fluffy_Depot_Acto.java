@@ -7,7 +7,7 @@ public class Fluffy_Depot_Acto extends SuperFluffy {
 
     public void runOpMode() {
 
-        initialization(true);
+        initialization(true);// You look nice today
         goldDetect();
 
         waitForStart();
@@ -26,7 +26,7 @@ public class Fluffy_Depot_Acto extends SuperFluffy {
             driveTime(3000, -.8, -.8); //Drive towards depot
         }
         else if (goldMineralPos == 2) { //Center
-            driveTime(750, -.8, -.8);
+            driveTime(750, -.8, -.8); // You look tired Go take a nap
             sleep(500);
             driveTime(750, .8, .8);
         }
