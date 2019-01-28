@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.sampledata;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-
+@Disabled
 @Autonomous(name="Fluffy: Depot")
 public class Fluffy_Depot extends SuperFluffy {
 

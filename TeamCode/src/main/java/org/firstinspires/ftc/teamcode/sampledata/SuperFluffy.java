@@ -304,7 +304,7 @@ public abstract class SuperFluffy extends LinearOpMode {
             telemetry.addData("left", left.getCurrentPosition());
             telemetry.addData("right", right.getCurrentPosition());
 
-            telemetry.update(); //You are the best human being makeing the best code for the best robot
+            telemetry.update();
         }
         left.setPower(0);
         right.setPower(0);
@@ -325,8 +325,8 @@ public abstract class SuperFluffy extends LinearOpMode {
     }
 
     public void rotateRight(double targetAngle, double power) {
-        left.setPower(power);
-        right.setPower(-power);
+        left.setPower(-power);
+        right.setPower(power);
 
         while (opModeIsActive() && getAngle() > targetAngle) {
             telemetry.addData("curentAngle", getAngle());
@@ -390,7 +390,7 @@ public abstract class SuperFluffy extends LinearOpMode {
 
     public void markerDrop(){
             servo.setPosition(1);
-            sleep(750);
+            sleep(1750);
     }
     public void markerReset(){
         servo.setPosition(.5);

@@ -41,6 +41,14 @@ public void runOpMode() {
         //colArmTrigger(gprt,gplt);
         armActuator(gpupd,gpdownd);
 
+        if(gpa2){
+            markerDrop();
+        }
+        if(gpb2){
+            markerReset();
+        }
+
+
     }
 }
 }
